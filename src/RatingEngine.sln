@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingEngine", "RatingEngine\RatingEngine.csproj", "{0339943F-8585-4ED2-AAB6-3E6FE425A853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatingEngine.Tests", "RatingEngine.Tests\RatingEngine.Tests.csproj", "{1BF5079A-A1C4-4B11-92FE-B1D38E4A9C28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0339943F-8585-4ED2-AAB6-3E6FE425A853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0339943F-8585-4ED2-AAB6-3E6FE425A853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0339943F-8585-4ED2-AAB6-3E6FE425A853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0339943F-8585-4ED2-AAB6-3E6FE425A853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BF5079A-A1C4-4B11-92FE-B1D38E4A9C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BF5079A-A1C4-4B11-92FE-B1D38E4A9C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF5079A-A1C4-4B11-92FE-B1D38E4A9C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BF5079A-A1C4-4B11-92FE-B1D38E4A9C28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
