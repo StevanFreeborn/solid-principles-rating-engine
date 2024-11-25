@@ -5,19 +5,32 @@ namespace RatingEngine;
 
 class Engine
 {
+  private readonly ConsoleLogger _logger = new();
+  private readonly FilePolicySource _source = new();
+  private readonly PolicySerializer _serializer = new();
+
+  public Engine()
+  {
+  }
+
+  public Engine(ConsoleLogger logger, FilePolicySource source, PolicySerializer serializer)
+  {
+    _logger = logger;
+    _source = source;
+    _serializer = serializer;
+  }
+
   public decimal Rate()
   {
-    Console.WriteLine("Starting rate.");
-    Console.WriteLine("Loading policy.");
+    _logger.Log("Starting rate.");
+    _logger.Log("Loading policy.");
 
-    var policyPath = Path.Combine(AppContext.BaseDirectory, "policy.json");
-    var policyJson = File.ReadAllText(policyPath);
-
-    var policy = JsonSerializer.Deserialize<Policy>(policyJson, Json.Options);
+    var policyJson = _source.GetPolicyFromSource();
+    var policy = _serializer.DeserializePolicy(policyJson);
 
     if (policy is null)
     {
-      Console.WriteLine("Failed to load policy.");
+      _logger.Log("Failed to load policy.");
       return 0;
     }
 
@@ -29,25 +42,25 @@ class Engine
       _ => RateUnknownPolicy(policy)
     };
 
-    Console.WriteLine("Rating completed.");
+    _logger.Log("Rating completed.");
 
     return rating;
   }
 
   private decimal RateUnknownPolicy(Policy policy)
   {
-    Console.WriteLine("Unknown policy type.");
+    _logger.Log("Unknown policy type.");
     return 0;
   }
 
   private decimal RateAutoPolicy(AutoPolicy auto)
   {
-    Console.WriteLine("Rating AUTO policy...");
-    Console.WriteLine("Validating policy.");
+    _logger.Log("Rating AUTO policy...");
+    _logger.Log("Validating policy.");
 
     if (string.IsNullOrEmpty(auto.Make))
     {
-      Console.WriteLine("Auto policy must specify Make");
+      _logger.Log("Auto policy must specify Make");
       return 0;
     }
 
@@ -66,18 +79,18 @@ class Engine
 
   private decimal RateLandPolicy(LandPolicy land)
   {
-    Console.WriteLine("Rating LAND policy...");
-    Console.WriteLine("Validating policy.");
+    _logger.Log("Rating LAND policy...");
+    _logger.Log("Validating policy.");
 
     if (land.BondAmount is 0 || land.Valuation is 0)
     {
-      Console.WriteLine("Land policy must specify Bond Amount and Valuation.");
+      _logger.Log("Land policy must specify Bond Amount and Valuation.");
       return 0;
     }
 
     if (land.BondAmount < 0.8m * land.Valuation)
     {
-      Console.WriteLine("Insufficient bond amount.");
+      _logger.Log("Insufficient bond amount.");
       return 0;
     }
 
@@ -86,22 +99,22 @@ class Engine
 
   private decimal RateLifePolicy(LifePolicy life)
   {
-    Console.WriteLine("Rating LIFE policy...");
-    Console.WriteLine("Validating policy.");
+    _logger.Log("Rating LIFE policy...");
+    _logger.Log("Validating policy.");
 
     if (life.DateOfBirth == DateTime.MinValue)
     {
-      Console.WriteLine("Life policy must include Date of Birth.");
+      _logger.Log("Life policy must include Date of Birth.");
       return 0;
     }
     if (life.DateOfBirth < DateTime.Today.AddYears(-100))
     {
-      Console.WriteLine("Centenarians are not eligible for coverage.");
+      _logger.Log("Centenarians are not eligible for coverage.");
       return 0;
     }
     if (life.Amount is 0)
     {
-      Console.WriteLine("Life policy must include an Amount.");
+      _logger.Log("Life policy must include an Amount.");
       return 0;
     }
 
