@@ -15,7 +15,7 @@ class PolicyConverter : JsonConverter<Policy>
       PolicyType.Life => JsonSerializer.Deserialize<LifePolicy>(root.GetRawText(), options),
       PolicyType.Land => JsonSerializer.Deserialize<LandPolicy>(root.GetRawText(), options),
       PolicyType.Auto => JsonSerializer.Deserialize<AutoPolicy>(root.GetRawText(), options),
-      _ => throw new JsonException("Unknown policy type")
+      _ => new UnknownPolicy(),
     };
   }
 
